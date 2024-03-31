@@ -10,9 +10,13 @@ python = "~3.11"
 SQLAlchemy = "^2.0.29"
 flask = "^3.0.2"
 python-dotenv = "^1.0.1"
-pytest = "^8.1.1"
-ruff = "^0.3.4"
 
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.3.4"
+pre-commit = "^3.7.0"
+pytest = "^8.1.1"
+freezegun = "^1.4.0"
 
 [build-system]
 requires = ["poetry-core"]
