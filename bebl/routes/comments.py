@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from flask import Blueprint, jsonify, request
 
-from bebl.db import db
+from bebl.exts import db
 from bebl.models import Comment
 
 bp_comments = Blueprint("comments", __name__, url_prefix="/posts/<uuid:post_id>/comments")

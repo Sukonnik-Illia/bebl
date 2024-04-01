@@ -1,17 +1,19 @@
 import uuid
 
+from sqlalchemy.dialects.postgresql import UUID
+
 from bebl.exts import bcrypt, db
 
 
 class User(db.Model):
-    uuid = db.Column(db.String(36), primary_key=True, default=uuid.uuid4)
+    uuid = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     username = db.Column(db.String(64), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128))
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
-    posts = db.relationship("post", backref="author")
-    comments = db.relationship("comment", backref="author")
+    posts = db.relationship("Post", backref="author")
+    comments = db.relationship("Comment", backref="author")
 
     def set_password(self, password):
         self.password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
@@ -21,22 +23,18 @@ class User(db.Model):
 
 
 class Post(db.Model):
-    uuid = db.Column(db.String(36), primary_key=True, default=uuid.uuid4())
+    uuid = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4())
     title = db.Column(db.String(120), nullable=False)
     content = db.Column(db.Text, nullable=False)
-    author_uuid = db.Column(db.String(36), db.ForeignKey("user.uuid"), nullable=False)
+    author_uuid = db.Column(UUID(as_uuid=True), db.ForeignKey("user.uuid"), nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
 
-    author = db.relationship("user", back_populates="posts")
-    comments = db.relationship("comment", backref="post")
+    comments = db.relationship("Comment", backref="post")
 
 
 class Comment(db.Model):
-    uuid = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    uuid = db.Column(UUID(as_uuid=True), primary_key=True, default=lambda: str(uuid.uuid4()))
     content = db.Column(db.Text, nullable=False)
-    author_uuid = db.Column(db.String(36), db.ForeignKey("user.uuid"), nullable=False)
-    post_uuid = db.Column(db.String(36), db.ForeignKey("post.uuid"), nullable=False)
+    author_uuid = db.Column(UUID(as_uuid=True), db.ForeignKey("user.uuid"), nullable=False)
+    post_uuid = db.Column(UUID(as_uuid=True), db.ForeignKey("post.uuid"), nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-
-    post = db.relationship("post", back_populates="comments")
-    author = db.relationship("user", back_populates="comments")

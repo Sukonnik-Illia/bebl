@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from flask import Blueprint, jsonify, request
 
-from bebl.db import db
+from bebl.exts import db
 from bebl.models import Post
 
 bp_posts = Blueprint("posts", __name__, url_prefix="/posts")
@@ -11,13 +11,14 @@ bp_posts = Blueprint("posts", __name__, url_prefix="/posts")
 
 @bp_posts.route("", methods=["GET"])
 def get_posts():
+    posts = db.session.query(Post).all()
     return jsonify(
         [
             {
                 "title": post.title,
                 "uuid": post.uuid,
             }
-            for post in db.get_posts()
+            for post in posts
         ]
     )
 
