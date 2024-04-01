@@ -1,6 +1,7 @@
 from flask import Flask
 from bebl.routes.posts import bp_posts
 from bebl.routes.comments import bp_comments
+from dotenv import load_dotenv
 
 
 def create_app():
