@@ -9,6 +9,11 @@ class Db:
         self.users = {}
         self.comments = defaultdict(list)
 
+    def clear_db(self):
+        self.posts = {}
+        self.users = {}
+        self.comments = defaultdict(list)
+
     def add_post(self, post: Post):
         self.posts[post.uuid] = post
 

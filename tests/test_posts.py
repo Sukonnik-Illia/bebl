@@ -1,13 +1,3 @@
-import pytest
-from freezegun import freeze_time
-
-
-@pytest.fixture
-def frozen_time():
-    with freeze_time("2024-03-30") as frozen_time:
-        yield frozen_time
-
-
 def test_creating_and_retrieving_posts(client, frozen_time):
     url = "/posts"
     test_post = {"title": "Hello", "content": "World"}

@@ -20,8 +20,9 @@ def create_comment(post_id):
         author_id=uuid4(),
     )
     db.add_comment(comment)
-    return jsonify(comment), 201
+    return jsonify(comment._as_dict()), 201
 
 
+@bp_comments.route("", methods=["GET"])
 def get_comments(post_id):
     return jsonify([comment._as_dict() for comment in db.get_comments(post_id)])
