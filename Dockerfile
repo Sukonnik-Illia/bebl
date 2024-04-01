@@ -7,6 +7,6 @@ RUN pip install poetry
 WORKDIR /bebl
 COPY . .
 RUN poetry install --without dev
+RUN chmod +x /bebl/entrypoint.sh
 
-# it's not production ready code so we can use flask's development server
-ENTRYPOINT [ "poetry",  "run", "flask", "--app", "bebl.main:create_app", "run", "--host", "0.0.0.0"]
+ENTRYPOINT [ "/bebl/entrypoint.sh"]

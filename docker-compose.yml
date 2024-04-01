@@ -6,6 +6,9 @@ services:
       - "5000:5000"
     depends_on:
       - db
+    environment:
+      - POSTGRES_HOST=db
+
   db:
   # it's a dirty build, so we don't need to have data percistence in volume
     image: postgres:latest
