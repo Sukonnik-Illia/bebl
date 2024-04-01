@@ -8,10 +8,12 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "~3.11"
 flask = "^3.0.2"
-python-dotenv = "^1.0.1"
 flask-migrate = "^4.0.7"
 flask-sqlalchemy = "^3.1.1"
 flask-bcrypt = "^1.0.1"
+pydantic = "^2.6.4"
+pydantic-settings = "^2.2.1"
+psycopg2-binary = "^2.9.9"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -23,3 +25,10 @@ freezegun = "^1.4.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 100
+
+lint.select=[
+    "I",
+]

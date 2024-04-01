@@ -1,20 +1,12 @@
 import uuid
-from sqlalchemy.dialects.postgresql import UUID
-from flask_sqlalchemy import SQLAlchemy
-from flask import Flask
-from flask_bcrypt import Bcrypt
-from datetime import datetime
-from dataclasses import dataclass
-from bebl.main import create_app
+
+from bebl.exts import bcrypt, db
 
 # TODO: we should not create app here
-db = SQLAlchemy(create_app())
-bcrypt = Bcrypt(create_app())
 
 
 class User(db.Model):
-    # uuid's is best choise for keys in DB if we are not care about space too much
-    uuid = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    uuid = db.Column(db.String(36), primary_key=True, default=uuid.uuid4)
     username = db.Column(db.String(64), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password_hash = db.Column(db.String(128))
@@ -31,7 +23,7 @@ class User(db.Model):
 
 
 class Post(db.Model):
-    uuid = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    uuid = db.Column(db.String(36), primary_key=True, default=uuid.uuid4())
     title = db.Column(db.String(120), nullable=False)
     content = db.Column(db.Text, nullable=False)
     author_uuid = db.Column(db.String(36), db.ForeignKey("User.uuid"), nullable=False)

@@ -1,13 +1,12 @@
-from uuid import uuid4
 from datetime import datetime
-from flask import jsonify, request, Blueprint
+from uuid import uuid4
 
-from bebl.models import Comment
+from flask import Blueprint, jsonify, request
+
 from bebl.db import db
+from bebl.models import Comment
 
-bp_comments = Blueprint(
-    "comments", __name__, url_prefix="/posts/<uuid:post_id>/comments"
-)
+bp_comments = Blueprint("comments", __name__, url_prefix="/posts/<uuid:post_id>/comments")
 
 
 @bp_comments.route("", methods=["POST"])

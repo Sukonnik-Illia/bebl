@@ -1,8 +1,10 @@
-from uuid import uuid4
 from datetime import datetime
-from flask import jsonify, request, Blueprint
-from bebl.models import Post
+from uuid import uuid4
+
+from flask import Blueprint, jsonify, request
+
 from bebl.db import db
+from bebl.models import Post
 
 bp_posts = Blueprint("posts", __name__, url_prefix="/posts")
 
@@ -22,9 +24,7 @@ def get_posts():
 
 @bp_posts.route("", methods=["POST"])
 def create_post():
-    post = Post(
-        uuid=uuid4(), **request.json, created_at=datetime.now(), author_uuid=uuid4()
-    )
+    post = Post(uuid=uuid4(), **request.json, created_at=datetime.now(), author_uuid=uuid4())
     db.add_post(post)
     return jsonify(post._as_dict()), 201
 

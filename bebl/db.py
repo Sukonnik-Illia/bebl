@@ -1,6 +1,7 @@
-from uuid import UUID
 from collections import defaultdict
-from bebl.models import Post, Comment, User
+from uuid import UUID
+
+from bebl.models import Comment, Post, User
 
 
 class Db:

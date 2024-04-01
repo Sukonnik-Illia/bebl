@@ -1,7 +1,8 @@
 import pytest
 from freezegun import freeze_time
-from bebl.main import create_app
+
 from bebl.db import db
+from bebl.main import create_app
 
 
 @pytest.fixture
